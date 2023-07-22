@@ -1,0 +1,103 @@
+  Future<void> userLogin({
+    required String email,
+    required String password,
+  }) async {
+    emit(LoginLoadingState());
+    FirebaseAuth.instance
+        .signInWithEmailAndPassword(
+          email: '$email@gym.com',
+          password: password,
+        )
+        .then((value) {
+      CacheHelper.saveData(
+          key: 'uId',
+          value:value.user?.uid);
+          emit(LoginSuccessState());
+        })
+        .then((value) {})
+        .catchError((error) {
+          emit(LoginErrorState(error.toString()));
+          print('lllllllllllllllllllllllllllllllllll'+error);
+        });
+  }
+///////////////////////////////////////////////////////////////////////////////////////
+
+  //<<<<<<<<<<<<<<<<<Start the cubit of createUser by firebase>>>>>>>>>>>>>>>>>>>>>>
+  void createUser({
+    required String name,
+    required String email,
+    required String phone,
+    required String uId,
+    required  String height,
+    required  String age,
+    required  String image,
+    required  String fatPercentage,
+    required  String weight,
+    required  String gender,
+  }) {
+    emit(CreateUserLoadingState());
+    UserModel model = UserModel(
+      gender: genderString,
+      name: name,
+      email: email,
+      uId: uId,
+      phone: phone,
+      image:
+      "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?size=338&ext=jpg&ga=GA1.1.292155642.1675795923",
+      height:height,
+      age: age,
+      fatPercentage: fatPercentage,
+      weight: weight,
+
+    );
+    FirebaseFirestore.instance
+        .collection('Users')
+        .doc(uId)
+        .set(model.toMap())
+        .then((value) {
+       emit(CreateUserSuccessState());
+    }).catchError((error) {
+      print('ccccccccccccccccccccccccccccccccccc'+error);
+      emit(CreateUserErrorState(error.toString()));
+    });
+  }
+////////////////////////////////////////////////////////////////////////////////////////////////
+ //<<<<<<<<<<<<<<<<<Start the cubit of Register by firebase>>>>>>>>>>>>>>>>>>>>>>
+  Future<void> userRegister({
+    required String email,
+    required String password,
+    required String name,
+    required String phone,
+    // String? image,
+  }) async {
+    emit(RegisterLoadingState());
+    FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: '$email@gym.com',
+      password: password,
+    )
+        .then((value) {
+      emit(RegisterSuccessState());
+       createUser(
+        gender: genderString,
+        name: name,
+        email: email,
+        uId: value.user!.uid,
+         phone: phone,
+        image:
+            "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?size=338&ext=jpg&ga=GA1.1.292155642.1675795923",
+        height: '${heightInitial.round()}',
+        age: '${ageInitial.round()}',
+        fatPercentage: '${fatPercentageInitial.round()}',
+        weight: '${weightInitial.round()}',
+      );
+
+      userLogin(
+          email: email,
+          password: password
+      );
+    }).catchError((error) {
+      emit(RegisterErrorState(error.toString()));
+      print('rrrrrrrrrrrrrrrrr'+error);
+    });
+  }
+/////////////////////////////////////////////////////////////////////////////

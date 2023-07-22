@@ -1,0 +1,92 @@
+
+ void updateProfileImage({
+    String? image,
+  }) {
+    UserModel model = UserModel(
+      image: image,
+      name: userModel?.name,
+      email: userModel?.email,
+      phone: userModel?.phone,
+      height: userModel?.height,
+      age: userModel?.age,
+      uId: userModel?.uId,
+      fatPercentage: userModel?.fatPercentage,
+      weight: userModel?.weight,
+      gender: userModel?.gender,
+    );
+    FirebaseFirestore.instance
+        .collection('Users')
+        .doc(userModel!.uId)
+        .update(model.toMap())
+        .then((value) {
+      profileImage = null;
+      getUserData();
+    }).catchError((error) {
+      emit(UserUpdateErrorState());
+    });
+  }
+*/
+
+/*
+  void updateUserBady({
+    String? height,
+    String? age,
+    String? fatPercentage,
+    String? weight,
+  }) async {
+    UserModel model = UserModel(
+      name: userModel?.name,
+      email: userModel?.email,
+      phone: userModel?.phone,
+      uId: userModel?.uId,
+      image: userModel?.image,
+      gender: userModel?.gender,
+      height: '${ageInitial.round()}',
+      age: '${ageInitial.round()}',
+      fatPercentage: '${fatPercentageInitial.round()}',
+      weight: '${weightInitial.round()}',
+    );
+    emit(UpdateUserBadyLoadingState());
+
+    FirebaseFirestore.instance
+        .collection('Users')
+        .doc(userModel!.uId)
+        .update(model.toMap())
+        .then((value) {
+      getUserData();
+      print("yessssss");
+    }).catchError((error) {
+      emit(UserUpdateErrorState());
+    });
+  }
+*/
+/*
+
+  void updateName({
+    required String name,
+  }) async {
+    UserModel model = UserModel(
+      name: name,
+      email: userModel?.email,
+      phone: userModel?.phone,
+      height: userModel?.height,
+      image: userModel?.image,
+      age: userModel?.age,
+      uId: userModel?.uId,
+      fatPercentage: userModel?.fatPercentage,
+      weight: userModel?.weight,
+      gender: userModel?.gender,
+    );
+    emit(UpdateNameLoadingState());
+    FirebaseFirestore.instance
+        .collection('Users')
+        .doc(userModel!.uId)
+        .update(model.toMap())
+        .then((value) {
+      getUserData();
+      print("yessssss");
+    }).catchError((error) {
+      emit(UserUpdateErrorState());
+    });
+  }
+*/
