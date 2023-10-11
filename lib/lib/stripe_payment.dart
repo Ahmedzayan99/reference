@@ -40,5 +40,6 @@ abstract class PaymentManager{
     );
     return response.data["client_secret"];
   }
-
 }
+import
+  flutter_stripe: ^9.3.0,
