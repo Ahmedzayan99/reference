@@ -107,3 +107,13 @@ class PaymobManager{
         Uri.parse("https://accept.paymob.com/api/acceptance/iframes/791787?payment_token=$paymentKey"),
       );
     });
+   
+Paymob Docs
+https://accept.paymob.com/portal2/ar/register?_gl=1*16bpuo7*_ga*MTE3MjI0ODk3Ny4xNjk3MDE1MzQ0*_ga_49H896WYTE*MTY5NzAxNTM0My4xLjEuMTY5NzAxNTM3OC4yNS4wLjA.
+Payment Api Flow
+https://docs.paymob.com/docs/accept-standard-redirect
+A guide for your Integration IDs.
+https://docs.paymob.com/docs/payment-integrations
+Transaction CallBacks
+https://docs.paymob.com/docs/transaction-webhooks
+   ➖➖➖➖
